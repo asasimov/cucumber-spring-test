@@ -17,7 +17,7 @@ public class CommonMenuStepdefs {
 
     @And("кликнуть на элемент меню с именем {string}")
     public void clickOnElementNamed(String elementName) {
-        menu.moveToElementAndClick(menu.get(elementName));
+        menu.moveToElementAndClick(elementName);
     }
 
 }

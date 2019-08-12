@@ -25,9 +25,9 @@ public class ServicePage extends BasePage {
     }
 
     public boolean findLinkByText(String text){
-        waitForLoader();
+        waitForElementLoader();
         for(WebElement link : links){
-            if(getText(link).equalsIgnoreCase(text)){
+            if(link.getText().equalsIgnoreCase(text)){
                 return true;
             }
         }

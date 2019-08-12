@@ -1,11 +1,17 @@
 package ru.otus.page;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.otus.service.ElementResolver;
 
 @Component
 public class MenuBlock extends BasePage {
+
+    @Autowired
+    private ElementResolver resolver;
 
     @NameOfElement(value = "ссылка услуги")
     @FindBy(css = "a[href='/category']")
@@ -36,28 +42,40 @@ public class MenuBlock extends BasePage {
     private WebElement logoLink;
 
     public void clickOnServiceButton(){
-        waitForLoader();
-        moveToElementAndClick(serviceButton);
+        waitForElementLoader();
+        new Actions(wd)
+                .moveToElement(serviceButton)
+                .click(serviceButton)
+                .perform();
     }
 
     public void clickOnPayButton(){
-        waitForLoader();
-        click(payButton);
+        waitForElementLoader();
+        payButton.click();
     }
 
     public void clickOnSupportButton(){
-        waitForLoader();
-        click(supportButton);
+        waitForElementLoader();
+        supportButton.click();
     }
 
     public void search(String text){
-        waitForLoader();
-        click(searchIcon);
-        type(searchInput, text);
-        click(searchButton);
+        waitForElementLoader();
+        searchIcon.click();
+        searchInput.clear();
+        searchInput.sendKeys(text);
+        searchButton.click();
     }
 
     public String getUrlOfImageLogo(){
-        return getAttribute(logoImage, "src");
+        return logoImage.getAttribute("src");
+    }
+
+    public void moveToElementAndClick(String elementName) {
+        WebElement element = resolver.getElementByName(elementName, this);
+        new Actions(wd)
+                .moveToElement(element)
+                .click(element)
+                .perform();
     }
 }

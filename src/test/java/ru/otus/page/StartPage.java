@@ -17,4 +17,7 @@ public class StartPage extends BasePage {
         openSection("");
     }
 
+    public String getTitle(){
+        return wd.getTitle();
+    }
 }
